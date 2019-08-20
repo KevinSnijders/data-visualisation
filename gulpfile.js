@@ -13,9 +13,6 @@ const eslint = require('gulp-eslint');
 const eslintConfig = require('./eslint-config');
 const uglify = require('gulp-uglify');
 
-
-console.log(eslintConfig.rules);
-
 let minifyStyles = 'style.min.css';
 let minifyScripts = 'scripts.min.js';
 
@@ -130,7 +127,7 @@ function html() {
 
 // Watch files
 function watchFiles() {
-	gulp.watch(dirPath.app.styles, styles);
+	gulp.watch(dirPath.app.styles, html, styles);
 	gulp.watch(dirPath.app.scripts, gulp.series(scriptsLint, scripts));
 	gulp.watch(
 		[dirPath.public],
