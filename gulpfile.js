@@ -14,7 +14,7 @@ const eslintConfig = require('./eslint-config');
 const uglify = require('gulp-uglify');
 
 let minifyStyles = 'style.min.css';
-let minifyScripts = 'scripts.min.js';
+let minifyScripts = 'script.min.js';
 
 // All the different app and build directory paths
 let baseApp = './app/';
@@ -24,12 +24,14 @@ let dirPath = {
 	app: {
 		styles: baseApp + 'css/**/*.css',
 		scripts: baseApp + 'js/**/*.js',
-		images: baseApp + 'images/**/*'
+		images: baseApp + 'images/**/*',
+		csv: baseApp + 'csv/**/*'
 	},
 	build: {
 		styles: baseBuild + 'css/',
 		scripts: baseBuild + 'js/',
-		images: baseBuild + 'images'
+		images: baseBuild + 'images',
+		csv: baseBuild + 'csv/'
 	},
 	public: './public/**/*'
 };
@@ -125,21 +127,33 @@ function html() {
 	)
 }
 
+function csv() {
+	return (
+		gulp
+			.src(dirPath.app.csv)
+			.pipe(plumber())
+			.pipe(gulp.dest(dirPath.build.csv))
+			.pipe(browsersync.stream())
+	)
+
+}
+
 // Watch files
 function watchFiles() {
-	gulp.watch(dirPath.app.styles, html, styles);
-	gulp.watch(dirPath.app.scripts, gulp.series(scriptsLint, scripts));
+	gulp.watch(dirPath.app.styles, styles);
+	gulp.watch(dirPath.app.scripts, gulp.series(scripts));
 	gulp.watch(
 		[dirPath.public],
+		html,
 		gulp.series(browserSyncReload)
 	);
 	gulp.watch(dirPath.app.images, images);
 }
 
 // define complex tasks
-const js = gulp.series(scriptsLint, scripts);
-const build = gulp.series(clean, gulp.parallel(html, styles, images, js));
+const js = gulp.series(scripts);
 const watch = gulp.parallel(watchFiles, browserSync);
+const build = gulp.series(clean, gulp.parallel(html, styles, images, csv, js), watch);
 
 // export tasks
 exports.images = images;
