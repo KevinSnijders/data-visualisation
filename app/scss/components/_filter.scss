@@ -1,8 +1,8 @@
 .filter {
   background: #fff;
-  border-radius: 5px;
-  margin-bottom: 2.8rem;
-  padding: 1.8rem 0;
+  border-radius: $border-radius;
+  margin: 0 0 3rem;
+  padding: 1.6rem 0;
   font-size: 1.4rem;
   box-shadow: 0 2px 12px $box-shadow-color;
 
@@ -23,14 +23,7 @@
     color: $text-color-light;
     text-align: center;
     padding: 1.2rem 0;
-  }
-
-  &__points {
-
-  }
-
-  &__clear {
-
+    border-radius: $border-radius;
   }
 
   &__title {
