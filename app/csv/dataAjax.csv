@@ -1,4 +1,4 @@
-﻿"_id__$oid","Recording_Datetime","Wedstrijd","punten","ScoreAjax","ScoreTegen","Competition","Topper","PuntenLatenLiggen","thuis_uit","ExerciseName","daysBeforeMatch","daysAfterMatch","nextMatch","previousMatch"
+﻿"_id__$oid","datetime","match","points","ScoreAjax","ScoreTegen","competition","Topper","lostPoints","location","ExerciseName","daysBeforeMatch","daysAfterMatch","nextMatch","previousMatch"
 "574453b776d973e538b51400","2011-08-07 14:34:28.000","De Graafschap - Ajax","3","4","1","Eredivisie","0","0","0","Whole dataset","0","0","De Graafschap - Ajax","De Graafschap - Ajax"
 "574453b776d973e538b51401","2011-08-14 14:35:02.000","Ajax - sc Heerenveen","3","5","1","Eredivisie","0","0","1","Whole dataset","0","0","Ajax - Heerenveen","Ajax - Heerenveen"
 "574453b776d973e538b51402","2011-08-21 14:32:06.000","VVV-Venlo - Ajax","1","2","2","Eredivisie","0","1","0","Whole dataset","0","0","VVV-Venlo - Ajax","VVV-Venlo - Ajax"

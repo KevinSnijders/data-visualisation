@@ -59,53 +59,37 @@
         </div>
 
         <div class="row">
-            <div class="col chart points" data-step="5"
-                 data-intro="Hier staan alle gespeelde wedstrijden georderd op clubs" style="font-weight: normal"
-                 data-position="right" id="wedstrijd-chart">
-                <div class="chart-title"><strong>Gespeelde wedstrijden</strong></div>
+            <div class="col chart chart__matches points" data-step="5"
+                 data-intro="Hier staan alle gespeelde wedstrijden georderd op clubs"
+                 data-position="right">
+                <h2 class="chart__title">Wedstrijden</h2>
             </div>
-            <!--                <div class="match-result">-->
-            <!--                    <button class="match-result_button" type="button">Bekijk resultaten</button>-->
-            <!--                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
-            <!--                    <script>-->
-            <!--						$(document).ready(function () {-->
-            <!--							$("button").click(function () {-->
-            <!--								$("table").toggle();-->
-            <!--							});-->
-            <!--						});-->
-            <!--                    </script>-->
-            <!--                </div>-->
-            <!--                <div class="">-->
-            <!--                    <table class="table table-hover dc-data-table hidden paganation"></table>-->
-            <!--                </div>-->
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-4 chart" data-step="6"
-                 data-intro="Hier kan gefilterd worden op een periode"
-                 style="font-weight: normal" data-position="right" id="date-chart">
+            <div class="col-12 col-md-6 col-lg-4 chart chart__date-time" data-step="6"
+                 data-intro="Hier kan gefilterd worden op een periode" data-position="right">
                 <div class="chart-title bold"><strong>Periode</strong></div>
 
             </div>
-            <div class="col-12 col-md-6 col-lg-4 chart" data-step="7"
+            <div class="col-12 col-md-6 col-lg-4 chart chart__competition" data-step="7"
                  data-intro="Hier kan gefilterd worden op competitie"
-                 style="font-weight: normal" data-position="left" id="competition-chart">
-                <div class="chart-title"><strong> Soort competition</strong></div>
+                 data-position="left">
+                <h2 class="chart-title">Soort competition</h2>
 
             </div>
-            <div class="col-12 col-md-6 col-lg-4 chart" data-step="8"
-                 data-intro="Hier kan gefilterd worden op thuis of uit"
-                 style="font-weight: normal" data-position="left" id="home-away-chart">
+            <div class="col-12 col-md-6 col-lg-4 chart chart__location" data-step="8"
+                 data-intro="Hier kan gefilterd worden op thuis of uit" data-position="left">
                 <div class="chart-title"><strong>Thuis of Uit</strong></div>
             </div>
-            <div class="col-12 col-md-6 col-lg-4 chart points" data-step="9"
-                 data-intro="Hier kan gefilterd worden op of er punten zijn verspeelt" style="font-weight: normal"
-                 data-position="right" id="losed-points-chart">
+            <div class="col-12 col-md-6 col-lg-4 chart chart__lost-points points" data-step="9"
+                 data-intro="Hier kan gefilterd worden op of er punten zijn verspeelt"
+                 data-position="right">
                 <div class="chart-title"><strong> Punten laten liggen </strong></div>
             </div>
-            <div class="col-12 col-md-6 col-lg-4 chart all_points" data-step="10"
+            <div class="col-12 col-md-6 col-lg-4 chart chart__points all_points" data-step="10"
                  data-intro="Hier kan gefilter worden op of er gewonnen, gelijk gespeeld of verloren is."
-                 style="font-weight: normal" data-position="top" id="total-points-chart">
+                 data-position="top">
                 <div class="chart-title"><strong>Behaalde punten</strong></div>
             </div>
         </div>

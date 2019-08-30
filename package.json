@@ -30,6 +30,7 @@
     "gulp-uglify": "^3.0.2"
   },
   "dependencies": {
-    "bootstrap": "^4.3.1"
+    "bootstrap": "^4.3.1",
+    "gulp": "^4.0.2"
   }
 }

@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	var slice = [].slice;
 
 	function queue(parallelism) {
@@ -26,7 +26,7 @@
 		}
 
 		function callback(i) {
-			return function(e, r) {
+			return function (e, r) {
 				--active;
 				if (error != null) return;
 				if (e != null) {
@@ -48,7 +48,7 @@
 		}
 
 		return q = {
-			defer: function() {
+			defer: function () {
 				if (!error) {
 					tasks.push(arguments);
 					++remaining;
@@ -56,13 +56,13 @@
 				}
 				return q;
 			},
-			await: function(f) {
+			await: function (f) {
 				await = f;
 				all = false;
 				if (!remaining) notify();
 				return q;
 			},
-			awaitAll: function(f) {
+			awaitAll: function (f) {
 				await = f;
 				all = true;
 				if (!remaining) notify();
@@ -71,10 +71,13 @@
 		};
 	}
 
-	function noop() {}
+	function noop() {
+	}
 
 	queue.version = "1.0.7";
-	if (typeof define === "function" && define.amd) define(function() { return queue; });
+	if (typeof define === "function" && define.amd) define(function () {
+		return queue;
+	});
 	else if (typeof module === "object" && module.exports) module.exports = queue;
 	else this.queue = queue;
 })();
@@ -85,92 +88,72 @@ queue();
 d3.csv('csv/dataAjax.csv', function (dataSet) {
 	//var dataSet = apiData;
 	var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S.%L");
-	var timeFormat = d3.time.format("%H:%M");
 	dataSet.forEach(function (d) {
-		d.Recording_Datetime = dateFormat.parse(d.Recording_Datetime);
-		d.Recording_Datetime.setDate(1);
+		d.datetime = dateFormat.parse(d.datetime);
+		d.datetime.setDate(1);
 	});
+
 
 	//Create a Crossfilter instance
 	var filter = crossfilter(dataSet);
 
 	//Define Dimensions
-	var Recording_Datetime = filter.dimension(function (d) {
-		return d.Recording_Datetime;
+	var datetime = filter.dimension(function (d) {
+		return d.datetime;
 	});
-	var MatchDate = filter.dimension(function (d) {
-		return dateFormat(d.Recording_Datetime);
+	var lostPoints = filter.dimension(function (d) {
+		return d.lostPoints < 1 ? 'no' : 'yes';
 	});
-	var PuntenLatenLiggen = filter.dimension(function (d) {
-		return d.PuntenLatenLiggen < 1 ? 'Nee' : 'ja';
+	var competition = filter.dimension(function (d) {
+		return d.competition;
 	});
-	var Competition = filter.dimension(function (d) {
-		return d.Competition;
+	var location = filter.dimension(function (d) {
+		return d.location > 0 ? 'home' : 'away';
 	});
-	var Thuis_Uit = filter.dimension(function (d) {
-		return d.thuis_uit > 0 ? 'thuis' : 'Uit';
-	});
-	var Punten = filter.dimension(function (d) {
-		return d.punten;
-	});
-	var Wedstrijd = filter.dimension(function (d) {
-		return d.Wedstrijd;
+	var points = filter.dimension(function (d) {
+		return d.points;
 	});
 	var match = filter.dimension(function (d) {
-		return d.Wedstrijd;
+		return d.match;
 	});
-	var dateDimension = filter.dimension(function (d) {
-		return d.Recording_Datetime
-	});
-
 
 	//Calculate metrics
-	var projectsByDate = Recording_Datetime.group();
-	var projectsByMatch = MatchDate.group();
-	var projectsByLosedPoints = PuntenLatenLiggen.group();
-	var projectsByCompetition = Competition.group();
-	var projectsByThuis_Uit = Thuis_Uit.group();
-	var projectsByPunten = Punten.group();
-	var WedstrijdGroup = Wedstrijd.group();
-	var matchGroup = match.group();
-	var all = filter.groupAll();
-
+	var groupByDateTime = datetime.group();
+	var groupByLostPoints = lostPoints.group();
+	var groupByCompetition = competition.group();
+	var groupByLocation = location.group();
+	var groupByPoints = points.group();
+	var groupByMatch = match.group();
+	var groupByAll = filter.groupAll();
 
 	var sumTotalPoints = filter.groupAll().reduceSum(function (d) {
-		return d.punten;
+		return d.points;
 	});
 
 	//Define threshold values for data
-	var minDate = Recording_Datetime.bottom(1)[0].Recording_Datetime;
-	var maxDate = Recording_Datetime.top(1)[0].Recording_Datetime;
+	var firstDate = datetime.bottom(1)[0].datetime;
+	var lastDate = datetime.top(1)[0].datetime;
 
 	//Charts
-	var wedstrijdChart = dc.barChart("#wedstrijd-chart");
-	var dateChart = dc.lineChart("#date-chart");
-	var CompetitionChart = dc.rowChart("#competition-chart");
-	var Thuis_UitChart = dc.pieChart("#home-away-chart");
-	var PuntenLatenLiggenChart = dc.rowChart("#losed-points-chart");
-	var PuntenChart = dc.rowChart("#total-points-chart");
+	var chartMatches = dc.barChart(".chart__matches");
+	var chartDateTime = dc.lineChart(".chart__date-time");
+	var chartCompetition = dc.rowChart(".chart__competition");
+	var chartLocation = dc.pieChart(".chart__location");
+	var chartLostPoints = dc.rowChart(".chart__lost-points");
+	var chartPoints = dc.rowChart(".chart__points");
 	var totalMatches = dc.numberDisplay(".filter__matches");
 	var totalPoints = dc.numberDisplay(".filter__points");
-	var table = dc.dataTable('.dc-data-table');
-
 
 	selectField = dc.selectMenu('.filter__team')
-		.dimension(Wedstrijd)
-		.group(WedstrijdGroup);
-
-	dc.dataCount(".filter__records")
-		.dimension(filter)
-		.group(all);
-
+		.dimension(match)
+		.group(groupByMatch);
 
 	totalMatches
 		.formatNumber(d3.format("d"))
 		.valueAccessor(function (d) {
 			return d;
 		})
-		.group(all);
+		.group(groupByAll);
 
 	totalPoints
 		.formatNumber(d3.format("d"))
@@ -179,15 +162,19 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		})
 		.group(sumTotalPoints);
 
-	dateChart
-	//.width(600)
+	dc.dataCount(".filter__records")
+		.dimension(filter)
+		.group(groupByAll);
+
+	chartDateTime
 		.height(220)
 		.margins({top: 10, right: 50, bottom: 30, left: 50})
-		.dimension(Recording_Datetime)
-		.group(projectsByDate)
+		.dimension(datetime)
+		.group(groupByDateTime)
 		.renderArea(true)
 		.transitionDuration(500)
-		.x(d3.time.scale().domain([minDate, maxDate]))
+		.x(d3.time.scale().domain([firstDate, lastDate]))
+		.colors(d3.scale.ordinal().range(['#4ECDC4']))
 		.elasticY(true)
 		.renderHorizontalGridLines(true)
 		.renderVerticalGridLines(true)
@@ -195,87 +182,91 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		.yAxis().ticks(6);
 
 
-	wedstrijdChart
-		.height(220)
+	chartMatches
+		.height(375)
 		.transitionDuration(1000)
 		.dimension(match)
-		.group(matchGroup)
-		.margins({top: 10, right: 50, bottom: 30, left: 50})
+		.group(groupByMatch)
+		.margins({top: 25, right: 50, bottom: 115, left: 50})
 		.centerBar(false)
 		.gap(5)
 		.elasticY(true)
-		.x(d3.scale.ordinal().domain(MatchDate))
-		.y(d3.scale.ordinal().domain(MatchDate))
+		.x(d3.scale.ordinal().domain(datetime))
+		.y(d3.scale.ordinal().domain(datetime))
 		.xUnits(dc.units.ordinal)
 		.renderHorizontalGridLines(true)
 		.renderVerticalGridLines(true)
 		.yAxisLabel("Aantal wedstrijden")
-
+		.colors(d3.scale.ordinal().range(['#FF6B6B']))
 		.yAxis().ticks(6);
 
-	CompetitionChart
+	chartCompetition
 		.height(220)
-		.dimension(Competition)
-		.group(projectsByCompetition)
+		.dimension(competition)
+		.group(groupByCompetition)
 		.elasticX(true)
+		.colors(d3.scale.ordinal().domain(["Champions League", "Eredivisie", "Europa League", "Johan Cruijff Schaal", "KNVB"])
+			.range(["#F45D4C", "#FC9D9A", "#A1DBB2", "#4ECDC4", "#F7A541"]))
+		.colorAccessor(function (d) {
+			switch (d.key) {
+				case 'Champions League':
+					return 'Champions League';
+				case 'Eredivisie':
+					return 'Eredivisie';
+				case 'Europa League':
+					return 'Europa League';
+				case 'Johan Cruijff Schaal':
+					return 'Johan Cruijff Schaal';
+				default:
+					return 'KNVB'
+			}
+		})
 		.xAxis().ticks(5);
 
-	PuntenChart
+	chartPoints
 		.height(220)
-		.dimension(Punten)
-		.group(projectsByPunten)
+		.dimension(points)
+		.group(groupByPoints)
+		.colors(d3.scale.ordinal().domain(["lose", "draw", "win"])
+			.range(["#F45D4C", "#FACA66", "#A1DBB2"]))
+		.colorAccessor(function (d) {
+			if (d.key === '0')
+				return 'lose';
+			else if (d.key === '1')
+				return 'draw';
+			return 'win';
+		})
 		.xAxis().ticks(4);
 
-	PuntenLatenLiggenChart
+	chartLostPoints
 		.height(220)
-		.dimension(PuntenLatenLiggen)
-		.group(projectsByLosedPoints)
+		.dimension(lostPoints)
+		.group(groupByLostPoints)
+		.colors(d3.scale.ordinal().domain(["no", "yes"])
+			.range(["#F45D4C", "#A1DBB2"]))
+		.colorAccessor(function (d) {
+			if (d.key === 'no')
+				return 'no';
+			return 'yes';
+		})
 		.xAxis().ticks(4);
 
 
-	Thuis_UitChart
+	chartLocation
 		.height(220)
 		.radius(90)
 		.innerRadius(40)
 		.transitionDuration(1000)
-		.dimension(Thuis_Uit)
-		.group(projectsByThuis_Uit);
-
-	table
-		.dimension(dateDimension)
-		.group(function (d) {
-			return d.Recording_Datetime.getFullYear();
+		.colors(d3.scale.ordinal().domain(["home", "away"])
+			.range(["#4ECDC4", "#FF6B6B"]))
+		.colorAccessor(function (d) {
+			if (d.key === 'home')
+				return 'home';
+			return 'away';
 		})
-		.size(10)
-		.columns([
+		.dimension(chartLocation)
+		.group(groupByLocation);
 
-			'Wedstrijd',
-			{
-				label: 'Thuis of uit',
-				format: function (d) {
-					return d.thuis_uit > 0 ? 'Thuis' : 'Uit';
-				}
-			},
-			{
-				label: 'Score Ajax',
-				format: function (d) {
-					return d.ScoreAjax;
-				}
-			},
-			{
-				label: 'Score tegen',
-				format: function (d) {
-					return d.ScoreTegen;
-				}
-			},
-			'punten',
-			'Competition',
-			{
-				label: 'Tijd',
-				format: function (d) {
-					return timeFormat(d.Recording_Datetime);
-				}
-			}
-		]);
+	// Render all the charts
 	dc.renderAll();
 });
