@@ -1,0 +1,14 @@
+.header {
+  background-color: $secondary-color;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  &__title {
+    font-size: 3.2rem;
+    color: $text-color-light;
+  }
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+    <title>Ajax</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.min.css"/>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="header__wrapper">
+            <img src="https://cdn-sport.eventim.nl/ticket-shops/ols/510/5562/img/responsive/logo.png"
+                 class="header__logo" alt="ajax logo">
+            <h1 class="header__title">Visual Dashboard</h1>
+            <button class="btn btn__intro" type="button"
+                    onclick="javascript:introJs().setOption('showProgress', true).start();">Help
+            </button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="row filter align-items-center text-center">
+            <div class="filter__team col-6 col-lg-3" data-step="1"
+                 data-intro="Hier kan een wedstrijd geselecteerd worden">
+                <h2 class="filter__title filter__title--dark">Selecteer een team</h2>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class=" filter__matches" data-step="2"
+                     data-intro="Hier word het aantal wedstrijd weergeven wat momenteel geselecteerd is"
+                     data-position="bottom"><h2 class="filter__title">
+                    Aantal wedstrijden
+                </h2>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="filter__points" data-step="3"
+                     data-intro="Hier word het aantal punten weergeven wat momenteel geselecteerd is"
+                     data-position="bottom">
+                    <h2 class="filter__title">
+                        Aantal punten
+                    </h2>
+                </div>
+            </div>
+
+            <div class="filter__records col-6 col-lg-3" data-step="4"
+                 data-intro="Hier word het aantal rije weergeven wat momenteel geselecteerd is en hoeveel rije er zijn"
+                 data-position="left">
+                <span class="filter-count">_</span> / <span class="total-count">_</span> records | <br\>
+                <span data-step="11" data-intro="Reset alle filters" data-position="left">
+                        <a href='javascript:dc.filterAll();dc.redrawAll();'><span>Reset All</span></a>
+                    </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col chart points" data-step="5"
+                 data-intro="Hier staan alle gespeelde wedstrijden georderd op clubs" style="font-weight: normal"
+                 data-position="right" id="wedstrijd-chart">
+                <div class="chart-title"><strong>Gespeelde wedstrijden</strong></div>
+            </div>
+            <!--                <div class="match-result">-->
+            <!--                    <button class="match-result_button" type="button">Bekijk resultaten</button>-->
+            <!--                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
+            <!--                    <script>-->
+            <!--						$(document).ready(function () {-->
+            <!--							$("button").click(function () {-->
+            <!--								$("table").toggle();-->
+            <!--							});-->
+            <!--						});-->
+            <!--                    </script>-->
+            <!--                </div>-->
+            <!--                <div class="">-->
+            <!--                    <table class="table table-hover dc-data-table hidden paganation"></table>-->
+            <!--                </div>-->
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 chart" data-step="6"
+                 data-intro="Hier kan gefilterd worden op een periode"
+                 style="font-weight: normal" data-position="right" id="date-chart">
+                <div class="chart-title bold"><strong>Periode</strong></div>
+
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart" data-step="7"
+                 data-intro="Hier kan gefilterd worden op competitie"
+                 style="font-weight: normal" data-position="left" id="competition-chart">
+                <div class="chart-title"><strong> Soort competition</strong></div>
+
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart" data-step="8"
+                 data-intro="Hier kan gefilterd worden op thuis of uit"
+                 style="font-weight: normal" data-position="left" id="home-away-chart">
+                <div class="chart-title"><strong>Thuis of Uit</strong></div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart points" data-step="9"
+                 data-intro="Hier kan gefilterd worden op of er punten zijn verspeelt" style="font-weight: normal"
+                 data-position="right" id="losed-points-chart">
+                <div class="chart-title"><strong> Punten laten liggen </strong></div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 chart all_points" data-step="10"
+                 data-intro="Hier kan gefilter worden op of er gewonnen, gelijk gespeeld of verloren is."
+                 style="font-weight: normal" data-position="top" id="total-points-chart">
+                <div class="chart-title"><strong>Behaalde punten</strong></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="js/script.min.js" type="text/javascript"></script>
+</body>
+</html>

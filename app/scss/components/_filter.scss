@@ -1,0 +1,52 @@
+.filter {
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 3.2rem;
+  margin-bottom: 2.8rem;
+  padding: 1.8rem 0;
+  font-size: 1.4rem;
+  box-shadow: 0 2px 12px $box-shadow-color;
+
+  &__team {
+    .dc-select-menu {
+      width: 100%;
+      border-color: $accent-color;
+      position: relative;
+      font-size: 1.4rem;
+      color: $text-color-dark;
+      padding: .4rem .6rem;
+    }
+  }
+
+  &__matches, &__points {
+    background: $primary-color;
+    position: relative;
+    color: $text-color-light;
+    text-align: center;
+    padding: 1.2rem 0;
+  }
+
+  &__points {
+
+  }
+
+  &__clear {
+
+  }
+
+  &__title {
+    font-size: 1.6rem;
+
+    &--light {
+      color: $text-color-light;
+    }
+
+    &--dark {
+      color: $text-color-dark;
+    }
+  }
+
+  a {
+    color: $primary-color;
+  }
+}
