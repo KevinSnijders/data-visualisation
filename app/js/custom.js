@@ -102,13 +102,13 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		return d.datetime;
 	});
 	var lostPoints = filter.dimension(function (d) {
-		return d.lostPoints < 1 ? 'no' : 'yes';
+		return d.lostPoints < 1 ? 'Nee' : 'Ja';
 	});
 	var competition = filter.dimension(function (d) {
 		return d.competition;
 	});
 	var location = filter.dimension(function (d) {
-		return d.location > 0 ? 'home' : 'away';
+		return parseInt(d.location) > 0 ? 'Thuis' : 'Uit';
 	});
 	var points = filter.dimension(function (d) {
 		return d.points;
@@ -139,7 +139,7 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 	var chartDateTime = dc.lineChart(".chart__date-time");
 	var chartCompetition = dc.rowChart(".chart__competition");
 	var chartLocation = dc.pieChart(".chart__location");
-	var chartLostPoints = dc.rowChart(".chart__lost-points");
+	var chartLostPoints = dc.barChart(".chart__lost-points");
 	var chartPoints = dc.rowChart(".chart__points");
 	var totalMatches = dc.numberDisplay(".filter__matches");
 	var totalPoints = dc.numberDisplay(".filter__points");
@@ -168,7 +168,6 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 
 	chartDateTime
 		.height(220)
-		.margins({top: 10, right: 50, bottom: 30, left: 50})
 		.dimension(datetime)
 		.group(groupByDateTime)
 		.renderArea(true)
@@ -178,7 +177,7 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		.elasticY(true)
 		.renderHorizontalGridLines(true)
 		.renderVerticalGridLines(true)
-		.xAxisLabel("Periode")
+		//.xAxisLabel("Periode")
 		.yAxis().ticks(6);
 
 
@@ -187,7 +186,7 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		.transitionDuration(1000)
 		.dimension(match)
 		.group(groupByMatch)
-		.margins({top: 25, right: 50, bottom: 115, left: 50})
+		.margins({top: 25, right: 50, bottom: 115, left: 75})
 		.centerBar(false)
 		.gap(5)
 		.elasticY(true)
@@ -196,8 +195,8 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		.xUnits(dc.units.ordinal)
 		.renderHorizontalGridLines(true)
 		.renderVerticalGridLines(true)
-		.yAxisLabel("Aantal wedstrijden")
-		.colors(d3.scale.ordinal().range(['#FF6B6B']))
+		//.yAxisLabel("Aantal wedstrijden")
+		.colors(d3.scale.ordinal().range(['#c90e35']))
 		.yAxis().ticks(6);
 
 	chartCompetition
@@ -206,7 +205,7 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		.group(groupByCompetition)
 		.elasticX(true)
 		.colors(d3.scale.ordinal().domain(["Champions League", "Eredivisie", "Europa League", "Johan Cruijff Schaal", "KNVB"])
-			.range(["#F45D4C", "#FC9D9A", "#A1DBB2", "#4ECDC4", "#F7A541"]))
+			.range(["#b57017", "#c90e35", "#f3c83f", "#FF9C5B", "#FAD089"]))
 		.colorAccessor(function (d) {
 			switch (d.key) {
 				case 'Champions League':
@@ -242,12 +241,20 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		.height(220)
 		.dimension(lostPoints)
 		.group(groupByLostPoints)
-		.colors(d3.scale.ordinal().domain(["no", "yes"])
+		.gap(32)
+		.elasticY(true)
+		.x(d3.scale.ordinal().domain(datetime))
+		.y(d3.scale.ordinal().domain(datetime))
+		//.xUnits(10)
+		.xUnits(dc.units.ordinal)
+		.renderHorizontalGridLines(true)
+		.renderVerticalGridLines(true)
+		.colors(d3.scale.ordinal().domain(["Nee", "Ja"])
 			.range(["#F45D4C", "#A1DBB2"]))
 		.colorAccessor(function (d) {
-			if (d.key === 'no')
-				return 'no';
-			return 'yes';
+			if (d.key === 'Nee')
+				return 'Nee';
+			return 'Ja';
 		})
 		.xAxis().ticks(4);
 
@@ -257,14 +264,17 @@ d3.csv('csv/dataAjax.csv', function (dataSet) {
 		.radius(90)
 		.innerRadius(40)
 		.transitionDuration(1000)
-		.colors(d3.scale.ordinal().domain(["home", "away"])
-			.range(["#4ECDC4", "#FF6B6B"]))
+		.colors(d3.scale.ordinal().domain(["Thuis", "Uit"])
+			.range(["#c90e35", "#050505"]))
 		.colorAccessor(function (d) {
-			if (d.key === 'home')
-				return 'home';
-			return 'away';
+			if (d.key === 'Thuis')
+				return 'Thuis';
+			return 'Uit';
 		})
-		.dimension(chartLocation)
+		.ordering(function (d) {
+			return +d.value
+		})
+		.dimension(location)
 		.group(groupByLocation);
 
 	// Render all the charts

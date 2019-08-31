@@ -8929,10 +8929,10 @@ dc.crossfilter = crossfilter;
 
 return dc;}
     if(typeof define === "function" && define.amd) {
-        define(["d3", "crossfilter"], _dc);
+        define(["app/js/vendors/d3", "app/js/vendors/crossfilter"], _dc);
     } else if(typeof module === "object" && module.exports) {
-        var _d3 = require('d3');
-        var _crossfilter = require('crossfilter');
+        var _d3 = require('app/js/vendors/d3');
+        var _crossfilter = require('app/js/vendors/crossfilter');
         // When using npm + browserify, 'crossfilter' is a function,
         // since package.json specifies index.js as main function, and it
         // does special handling. When using bower + browserify,

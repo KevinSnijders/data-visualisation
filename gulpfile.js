@@ -24,8 +24,8 @@ let baseBuild = './build/';
 let dirPath = {
 	app: {
 		styles: baseApp + 'scss/**/*.scss',
-		scripts: baseApp + 'js/**/*.js',
-		vendor: baseApp + 'js/jquery.min.js',
+		scripts: baseApp + 'js/*.js',
+		vendor: baseApp + 'js/vendors/*.js',
 		images: baseApp + 'images/**/*',
 		csv: baseApp + 'csv/**/*'
 	},
