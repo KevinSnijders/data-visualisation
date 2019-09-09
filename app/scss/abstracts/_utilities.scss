@@ -1,0 +1,19 @@
+.order {
+  &--team {
+    order: 1;
+  }
+  &--amount {
+    order: 2;
+    @media only screen and (max-width: 991px) {
+      order: 3;
+    }
+  }
+
+  &--record {
+    order: 3;
+    @media only screen and (max-width: 991px) {
+      order: 2;
+    }
+  }
+}
+

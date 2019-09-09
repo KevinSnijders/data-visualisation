@@ -1,4 +1,7 @@
 .dc-chart {
+  @media only screen and (max-width: 991px) {
+    margin: 1.2rem 0;
+  }
   rect {
     &.bar {
       stroke: none;
@@ -210,7 +213,6 @@
 
     &.row {
       rect {
-        fill-opacity: 0.8;
         cursor: pointer;
 
         &:hover {
