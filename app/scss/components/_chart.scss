@@ -1,0 +1,21 @@
+.chart {
+  background: $chart-background-color;
+  border: 1px solid $accent-color;
+  border-radius: $border-radius;
+  margin-bottom: 3rem;
+  box-shadow: 0 2px 6px $box-shadow-color;
+
+  &__title {
+    border-bottom: 1px solid $accent-color;
+    color: $primary-color;
+    font-size: 1.6rem;
+    padding: 1.2rem 0;
+    text-align: center;
+  }
+
+  g.x g.tick text {
+    text-anchor: end !important;
+    transform: rotate(-45deg);
+  }
+}
+

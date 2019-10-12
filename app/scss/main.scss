@@ -1,0 +1,30 @@
+@charset 'UTF-8';
+
+// 1. Configuration and helpers
+@import
+'abstracts/variables',
+'abstracts/utilities';
+
+// 2. Vendors
+@import
+'vendors/bootstrap',
+'vendors/introjs',
+'vendors/dc.chart';
+
+// 3. Base
+@import
+'base/base';
+
+// 4. Layout-related sections
+@import
+'layout/header';
+//'layout/footer';
+
+// 5. Components
+@import
+'components/chart',
+'components/filter',
+//'components/btn',
+'components/btn';
+
+

@@ -7,6 +7,7 @@ const del = require('del');
 const newer = require('gulp-newer');
 const imagemin = require('gulp-imagemin');
 const plumber = require('gulp-plumber');
+const sass = require('gulp-sass');
 const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
 const eslint = require('gulp-eslint');
@@ -22,8 +23,9 @@ let baseBuild = './build/';
 
 let dirPath = {
 	app: {
-		styles: baseApp + 'css/**/*.css',
-		scripts: baseApp + 'js/**/*.js',
+		styles: baseApp + 'scss/**/*.scss',
+		scripts: baseApp + 'js/*.js',
+		vendor: baseApp + 'js/vendors/*.js',
 		images: baseApp + 'images/**/*',
 		csv: baseApp + 'csv/**/*'
 	},
@@ -86,6 +88,7 @@ function styles() {
 	return gulp
 		.src(dirPath.app.styles)
 		.pipe(plumber())
+		.pipe(sass({ outputStyle: "expanded" }))
 		.pipe(cleanCSS({compatibility: 'ie11'}))
 		.pipe(concat(minifyStyles))
 		.pipe(gulp.dest(dirPath.build.styles))
@@ -108,7 +111,7 @@ function scriptsLint() {
 function scripts() {
 	return (
 		gulp
-			.src([dirPath.app.scripts])
+			.src([dirPath.app.vendor, dirPath.app.scripts])
 			.pipe(plumber())
 			.pipe(uglify())
 			.pipe(concat(minifyScripts))
