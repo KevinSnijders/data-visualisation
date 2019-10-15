@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+    <title>Ajax</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.min.css"/>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="header__wrapper">
+            <img src="../images/logo.png"
+                 class="header__logo" alt="ajax logo">
+            <h1 class="header__title">Visueel Dashboard</h1>
+            <button class="btn btn__intro" type="button"
+                    onclick="javascript:introJs().setOption('showProgress', true).start();">Help
+            </button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="row filter align-items-center text-center order--team">
+            <div class="filter__team col-6 col-lg-3" data-step="1"
+                 data-intro="Hier kan een wedstrijd geselecteerd worden">
+                <h2 class="filter__title filter__title--dark">Selecteer een team</h2>
+            </div>
+            <div class="col-6 col-lg-3 order--amount">
+                <div class=" filter__matches" data-step="2"
+                     data-intro="Hier word het aantal wedstrijd weergeven wat momenteel geselecteerd is"
+                     data-position="bottom"><h2 class="filter__title">
+                    Aantal wedstrijden
+                </h2>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 order--amount">
+                <div class="filter__points" data-step="3"
+                     data-intro="Hier word het aantal punten weergeven wat momenteel geselecteerd is"
+                     data-position="bottom">
+                    <h2 class="filter__title">
+                        Aantal punten
+                    </h2>
+                </div>
+            </div>
+
+            <div class="filter__records col-6 col-lg-3 order--record" data-step="4"
+                 data-intro="Hier word het aantal rije weergeven wat momenteel geselecteerd is en hoeveel rije er zijn"
+                 data-position="left">
+                <span class="filter-count">_</span> / <span class="total-count">_</span> records | <br\>
+                <span data-step="11" data-intro="Reset alle filters" data-position="left">
+                        <a href='javascript:dc.filterAll();dc.redrawAll();'><span>Reset All</span></a>
+                    </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" data-step="5"
+                 data-intro="Hier staan alle gespeelde wedstrijden georderd op clubs"
+                 data-position="right">
+                <div class="chart chart__matches">
+                    <h2 class="chart__title">Wedstrijden</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6" data-step="6"
+                 data-intro="Hier kan gefilterd worden op een periode" data-position="right">
+                <div class="chart chart__date-time">
+                    <h2 class="chart__title bold">Periode</h2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6" data-step="7"
+                 data-intro="Hier kan gefilterd worden op competitie"
+                 data-position="left">
+                <div class="chart chart__competition">
+                    <h2 class="chart__title">Soort competitie</h2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" data-step="8"
+                 data-intro="Hier kan gefilterd worden op of er punten zijn verspeelt"
+                 data-position="right">
+                <div class="chart chart__lost-points">
+                    <h2 class="chart__title">Punten laten liggen</h2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" data-step="9"
+                 data-intro="Hier kan gefilterd worden op thuis of uit" data-position="left">
+                <div class="chart chart__location">
+                    <h2 class="chart__title">Thuis of Uit</h2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4" data-step="10"
+                 data-intro="Hier kan gefilter worden op of er gewonnen, gelijk gespeeld of verloren is."
+                 data-position="top">
+                <div class="chart chart__points">
+                    <h2 class="chart__title">Behaalde punten</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="js/script.min.js" type="text/javascript"></script>
+</body>
+</html>
